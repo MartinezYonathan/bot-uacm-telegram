@@ -82,6 +82,7 @@ def handle(msg):
 
 
 TOKEN = os.getenv("TOKEN")
+print (TOKEN)
 bot = telepot.Bot(TOKEN)
 bot.message_loop(handle)
 print ('Estoy escuchando...')
