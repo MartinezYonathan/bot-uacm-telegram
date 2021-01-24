@@ -11,7 +11,6 @@ import os
 import random
 
 TOKEN = os.getenv("TOKEN")
-print(TOKEN)
 updater = Updater(token=TOKEN)
 dispatcher = updater.dispatcher
 
@@ -22,7 +21,7 @@ logger = logging.getLogger()
 def start_handler(update, context):
     logger.info("User {} started bot".format(update.effective_user["id"]))
     context.bot.send_message(
-        chat_id=update.effective_chat.id, text="Здравствуй, братан!")
+        chat_id=update.effective_chat.id, text="Hola! soy el bot de la uacm")
 
 def random_handler(update, context):
     number = random.randint(0, 10)
