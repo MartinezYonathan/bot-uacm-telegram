@@ -5,56 +5,34 @@ This is built on the API wrapper, see rawapibot.py to see the same example built
 on the telegram.ext bot framework.
 This program is dedicated to the public domain under the CC0 license.
 """
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import logging
 import os
-from typing import NoReturn
-from time import sleep
 
-import telegram
-from telegram.error import NetworkError, Unauthorized
+TOKEN = os.getenv("TOKEN")
+print(TOKEN)
+updater = Updater(token=TOKEN)
+dispatcher = updater.dispatcher
 
-
-UPDATE_ID = None
-
-
-def main() -> NoReturn:
-    """Run the bot."""
-    global UPDATE_ID
-    # Telegram Bot Authorization Token
-    TOKEN = os.getenv("TOKEN")
-    bot = telegram.Bot(TOKEN)
-
-    # get the first pending update_id, this is so we can skip over it in case
-    # we get an "Unauthorized" exception.
-    try:
-        UPDATE_ID = bot.get_updates()[0].update_id
-    except IndexError:
-        UPDATE_ID = None
-
-    logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-
-    while True:
-        try:
-            echo(bot)
-        except NetworkError:
-            sleep(1)
-        except Unauthorized:
-            # The user has removed or blocked the bot.
-            UPDATE_ID += 1  # type: ignore[operator]
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
 
-def echo(bot: telegram.Bot) -> None:
-    """Echo the message the user sent."""
-    global UPDATE_ID
-    # Request updates after the last update_id
-    for update in bot.get_updates(offset=UPDATE_ID, timeout=10):
-        UPDATE_ID = update.update_id + 1
-
-        if update.message:  # your bot can receive updates without messages
-            if update.message.text:  # not all messages contain text
-                # Reply to the message
-                update.message.reply_text(update.message.text)
+def start(update, context):
+    context.bot.send_message(
+        chat_id=update.effective_chat.id, text="Здравствуй, братан!")
 
 
-if __name__ == '__main__':
-    main()
+start_handler = CommandHandler('start', start)
+dispatcher.add_handler(start_handler)
+
+
+def echo(update, context):
+    context.bot.send_message(
+        chat_id=update.effective_chat.id, text=update.message.text[::-1])
+
+
+echo_handler = MessageHandler(Filters.text, echo)
+dispatcher.add_handler(echo_handler)
+
+updater.start_polling()
