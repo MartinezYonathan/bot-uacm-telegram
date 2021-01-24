@@ -6,6 +6,7 @@ on the telegram.ext bot framework.
 This program is dedicated to the public domain under the CC0 license.
 """
 import logging
+import os
 from typing import NoReturn
 from time import sleep
 
