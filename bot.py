@@ -24,23 +24,34 @@ def start_handler(update, context):
 
     user = update.message.from_user
     print('You talk with user {} and his user ID: {} '.format(
-    user['username'], user['id']))
+        user['username'], user['id']))
 
-    saludos = f"""
-    Hola {user['username']}! Esto es el bot de la uacm!
-    /dime en que puedo ayudarte?
-    """
+    saludos = f""" Hola {user['username']}! """
+    saludo2 = f""" Esto es el bot de la uacm! """
+    saludo3 = f""" Dime en que puedo ayudarte? """
+    saludo3 = f""" /planteles
+                   /carreras
+                   /info
+                   /horarios """
 
     context.bot.send_message(
         chat_id=update.effective_chat.id, text=saludos)
+    context.bot.send_message(
+        chat_id=update.effective_chat.id, text=saludo2)
+    context.bot.send_message(
+        chat_id=update.effective_chat.id, text=saludo3)
+
 
 def random_handler(update, context):
     number = random.randint(0, 10)
-    logger.info("User {} randomed number {}".format(update.effective_user["id"], number))
+    logger.info("User {} randomed number {}".format(
+        update.effective_user["id"], number))
     update.message.reply_text("Random number: {}".format(number))
+
 
 dispatcher.add_handler(CommandHandler("start", start_handler))
 dispatcher.add_handler(CommandHandler("random", random_handler))
+
 
 def echo(update, context):
     context.bot.send_message(
