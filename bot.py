@@ -29,10 +29,10 @@ def start_handler(update, context):
     saludos = f""" Hola {user['username']}! """
     saludo2 = f""" Esto es el bot de la uacm! """
     saludo3 = f""" Dime en que puedo ayudarte? """
-    saludo3 = f""" /planteles
-                   /carreras
-                   /info
-                   /horarios """
+    planteles = f""" /planteles """
+    carreras = f""" /carreras """
+    horarios = f""" /horarios """
+    info = f""" /info """
 
     context.bot.send_message(
         chat_id=update.effective_chat.id, text=saludos)
@@ -40,6 +40,14 @@ def start_handler(update, context):
         chat_id=update.effective_chat.id, text=saludo2)
     context.bot.send_message(
         chat_id=update.effective_chat.id, text=saludo3)
+    context.bot.send_message(
+        chat_id=update.effective_chat.id, text=planteles)
+    context.bot.send_message(
+        chat_id=update.effective_chat.id, text=carreras)
+    context.bot.send_message(
+        chat_id=update.effective_chat.id, text=horarios)
+    context.bot.send_message(
+        chat_id=update.effective_chat.id, text=info)
 
 
 def random_handler(update, context):
@@ -49,8 +57,20 @@ def random_handler(update, context):
     update.message.reply_text("Random number: {}".format(number))
 
 
+def planteles_handler(update, context):
+    logger.info("User {} planteles ".format(
+        update.effective_user["id"] ))
+
+    update.message.reply_text("Plantel: Casa Libertad")
+    update.message.reply_text("Plantel: Centro Histórico")
+    update.message.reply_text("Plantel: Cuautepec")
+    update.message.reply_text("Plantel: Del Valle")
+    update.message.reply_text("Plantel: San Lorenzo Tezonco")
+
+
 dispatcher.add_handler(CommandHandler("start", start_handler))
 dispatcher.add_handler(CommandHandler("random", random_handler))
+dispatcher.add_handler(CommandHandler("planteles", planteles_handler))
 
 
 def echo(update, context):
