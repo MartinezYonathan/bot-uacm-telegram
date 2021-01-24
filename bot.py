@@ -20,8 +20,13 @@ logger = logging.getLogger()
 
 def start_handler(update, context):
     logger.info("User {} started bot".format(update.effective_user["id"]))
+
+    saludos = f"""
+    Hola {updater.message.from_user.username}! Esto es el bot de la uacm!
+    /dime en que puedo ayudarte?
+    """
     context.bot.send_message(
-        chat_id=update.effective_chat.id, text="Hola! soy el bot de la uacm")
+        chat_id=update.effective_chat.id, text=saludos)
 
 def random_handler(update, context):
     number = random.randint(0, 10)
