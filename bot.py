@@ -12,7 +12,7 @@ import random
 
 #TOKEN = os.getenv("TOKEN")
 TOKEN = "AAGUFRYRC2uhgpbymVU3VXR_ckUw0sdgWBI"
-updater = Updater(token=TOKEN)
+updater = Updater(TOKEN, use_context=True)
 dispatcher = updater.dispatcher
 
 logging.basicConfig(
