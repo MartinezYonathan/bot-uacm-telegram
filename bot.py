@@ -10,7 +10,8 @@ import logging
 import os
 import random
 
-TOKEN = os.getenv("TOKEN")
+#TOKEN = os.getenv("TOKEN")
+TOKEN = "AAGUFRYRC2uhgpbymVU3VXR_ckUw0sdgWBI"
 updater = Updater(token=TOKEN)
 dispatcher = updater.dispatcher
 
